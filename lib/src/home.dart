@@ -14,7 +14,46 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Container(),
+      body: Container(
+        margin: const EdgeInsets.all(20.0),
+        child: Form(
+          child: Column(
+            children: [
+              emailField(),
+              passwordField(),
+              const SizedBox(height: 12),
+              submitButton(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget emailField() {
+    return TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: const InputDecoration(
+        labelText: 'Email',
+        hintText: 'usename@email.com',
+      ),
+    );
+  }
+
+  Widget passwordField() {
+    return TextFormField(
+      obscureText: true,
+      decoration: const InputDecoration(
+        labelText: 'Password',
+        hintText: 'Password',
+      ),
+    );
+  }
+
+  Widget submitButton() {
+    return ElevatedButton(
+      child: const Text('Submit'),
+      onPressed: () {},
     );
   }
 }
