@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -8,6 +9,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +20,7 @@ class _HomeState extends State<Home> {
       body: Container(
         margin: const EdgeInsets.all(20.0),
         child: Form(
+          key: formKey,
           child: Column(
             children: [
               emailField(),
@@ -37,6 +41,8 @@ class _HomeState extends State<Home> {
         labelText: 'Email',
         hintText: 'usename@email.com',
       ),
+      validator: (value) =>
+          EmailValidator.validate(value!) ? null : 'invalid email format',
     );
   }
 
@@ -47,13 +53,18 @@ class _HomeState extends State<Home> {
         labelText: 'Password',
         hintText: 'Password',
       ),
+      validator: (value) => value == null || value.length < 6
+          ? 'password must at least 6 chracter'
+          : null,
     );
   }
 
   Widget submitButton() {
     return ElevatedButton(
       child: const Text('Submit'),
-      onPressed: () {},
+      onPressed: () {
+        formKey.currentState!.validate();
+      },
     );
   }
 }
