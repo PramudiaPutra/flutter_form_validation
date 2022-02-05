@@ -11,6 +11,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final formKey = GlobalKey<FormState>();
 
+  String? email = '';
+  String? passwd = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +46,7 @@ class _HomeState extends State<Home> {
       ),
       validator: (value) =>
           EmailValidator.validate(value!) ? null : 'invalid email format',
+      onSaved: (newValue) => email = newValue,
     );
   }
 
@@ -56,6 +60,7 @@ class _HomeState extends State<Home> {
       validator: (value) => value == null || value.length < 6
           ? 'password must at least 6 chracter'
           : null,
+      onSaved: (newValue) => passwd = newValue,
     );
   }
 
@@ -63,7 +68,10 @@ class _HomeState extends State<Home> {
     return ElevatedButton(
       child: const Text('Submit'),
       onPressed: () {
-        formKey.currentState!.validate();
+        if (formKey.currentState!.validate()) {
+          formKey.currentState!.save();
+          print('post email $email and password $passwd to remote api');
+        }
       },
     );
   }
