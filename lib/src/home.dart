@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:forms_validation/src/functions/form_validation.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with FormValidation {
   final formKey = GlobalKey<FormState>();
 
   String? email = '';
@@ -44,8 +45,7 @@ class _HomeState extends State<Home> {
         labelText: 'Email',
         hintText: 'usename@email.com',
       ),
-      validator: (value) =>
-          EmailValidator.validate(value!) ? null : 'invalid email format',
+      validator: validateEmail,
       onSaved: (newValue) => email = newValue,
     );
   }
@@ -57,9 +57,7 @@ class _HomeState extends State<Home> {
         labelText: 'Password',
         hintText: 'Password',
       ),
-      validator: (value) => value == null || value.length < 6
-          ? 'password must at least 6 chracter'
-          : null,
+      validator: validatePassword,
       onSaved: (newValue) => passwd = newValue,
     );
   }
