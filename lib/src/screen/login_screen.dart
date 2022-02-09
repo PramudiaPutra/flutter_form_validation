@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget passwordField() {
-    return TextFormField(
+    return TextField(
       obscureText: true,
       decoration: const InputDecoration(
         labelText: 'Password',
