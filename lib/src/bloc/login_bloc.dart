@@ -17,5 +17,3 @@ class LoginBloc extends FormValidation {
     _password.close();
   }
 }
-
-final bloc = LoginBloc();
