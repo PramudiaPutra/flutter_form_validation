@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:forms_validation/src/bloc/login_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,22 +20,36 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget emailField() {
-    return TextField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: const InputDecoration(
-        labelText: 'Email',
-        hintText: 'usename@email.com',
-      ),
+    return StreamBuilder(
+      stream: bloc.email,
+      builder: (context, snapshot) {
+        return TextField(
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            labelText: 'Email',
+            hintText: 'usename@email.com',
+            errorText: snapshot.error?.toString(),
+          ),
+          onChanged: bloc.changeEmail,
+        );
+      },
     );
   }
 
   Widget passwordField() {
-    return TextField(
-      obscureText: true,
-      decoration: const InputDecoration(
-        labelText: 'Password',
-        hintText: 'Password',
-      ),
+    return StreamBuilder(
+      stream: bloc.password,
+      builder: (context, snapshot) {
+        return TextField(
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText: 'Password',
+            hintText: 'Password',
+            errorText: snapshot.error?.toString(),
+          ),
+          onChanged: bloc.changePassword,
+        );
+      },
     );
   }
 
