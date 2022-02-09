@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
           emailField(bloc),
           passwordField(bloc),
           const SizedBox(height: 12),
-          submitButton(),
+          submitButton(bloc),
         ],
       ),
     );
@@ -55,10 +55,23 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget submitButton() {
-    return ElevatedButton(
-      child: const Text('Submit'),
-      onPressed: () {},
+  Widget submitButton(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.submitLogin,
+      builder: (context, snapshot) {
+        return ElevatedButton(
+          child: const Text('Submit'),
+          onPressed: snapshot.hasData
+              ? () {
+                  final snackBar = SnackBar(
+                    content: Text(
+                        'email: ${bloc.emailValue}\npasswd: ${bloc.passwdValue}'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              : null,
+        );
+      },
     );
   }
 }
